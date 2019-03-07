@@ -1,4 +1,12 @@
 {
   "editor.formatOnSave": true,
-  "editor.formatOnSaveTimeout": 1000
+  "editor.formatOnSaveTimeout": 500,
+  "search.exclude": {
+    "public": true,
+    ".cache": true
+  },
+  "files.exclude": {
+    "**/public": true,
+    "**/.cache": true
+  }
 }
