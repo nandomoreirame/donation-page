@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Hello = () => {
-  return <h1>Hello</h1>
+const Hello = ({ title }) => {
+  return <h1>{title}</h1>
 }
 
 export default Hello

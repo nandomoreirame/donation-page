@@ -1,6 +1,5 @@
 {
-  "editor.formatOnSave": true,
-  "editor.formatOnSaveTimeout": 500,
+  "editor.formatOnSave": false,
   "search.exclude": {
     "public": true,
     ".cache": true
@@ -8,5 +7,9 @@
   "files.exclude": {
     "**/public": true,
     "**/.cache": true
-  }
+  },
+  "prettier.disableLanguages": [".test.js"],
+  "prettier.singleQuote": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.ignorePath": "**/__tests__/*"
 }
