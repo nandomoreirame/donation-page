@@ -1,0 +1,2 @@
+# Redirect default Netlify subdomain to primary domain
+http://donation-page.netlify.com/* http://donation-page.nandomoreira.me/:splat 301!
