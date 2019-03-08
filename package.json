@@ -22,7 +22,9 @@
     "watch": "npm run dev",
     "start": "npm run dev",
     "clean": "rm -rf .cache/ public/",
-    "test": "jest"
+    "test": "jest",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "husky": {
     "hooks": {
@@ -52,6 +54,12 @@
     "jest-dom": "^3.1.2",
     "lint-staged": "^8.1.5",
     "prettier": "1.16.4",
-    "react-testing-library": "^6.0.0"
+    "react-testing-library": "^6.0.0",
+    "@storybook/react": "^5.0.0",
+    "@storybook/addon-actions": "^5.0.0",
+    "@storybook/addon-links": "^5.0.0",
+    "@storybook/addons": "^5.0.0",
+    "@babel/core": "^7.3.4",
+    "babel-loader": "^8.0.5"
   }
 }
