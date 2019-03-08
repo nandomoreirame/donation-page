@@ -14,7 +14,7 @@ export default ({ data }) => {
   } = data.site.siteMetadata
   return (
     <Layout>
-      <Hello />
+      <Hello title="Hello React" />
       <p>name: {name}</p>
       <p>description: {description}</p>
       <p>author: {author.name}</p>

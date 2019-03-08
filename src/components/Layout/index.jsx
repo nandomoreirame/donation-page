@@ -1,5 +1,6 @@
 import React from 'react'
 
+import 'normalize.css/normalize.css'
 import './base.styl'
 import module from './layout.module.styl'
 
