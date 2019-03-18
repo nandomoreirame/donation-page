@@ -24,11 +24,11 @@ const Footer = ({ logo, email, phones }) => (
             {phones.map((phone, i) => {
               if (!phone.number) return null
               return (
-                <p className={module.Footer__text} key={i}>{phone.title}: <a href={`tel:${phone2tel(phone.number)}`} >{phone.number}</a></p>
+                <p className={module.Footer__text} key={i}>{phone.title}: <a href={`tel:${ phone2tel(phone.number) }`} >{phone.number}</a></p>
               )
             })}
 
-            {email && <p className={module.Footer__text}>Por email: <a href={`mailto:${email}`} title={`Por email: ${email}`}>{email}</a></p>}
+            {email && <p className={module.Footer__text}>Por email: <a href={`mailto:${ email }`} title={`Por email: ${ email }`}>{email}</a></p>}
           </div>
         }
       </div>
