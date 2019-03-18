@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import SocialIcons from '../SocialIcons'
-import styles from './styles'
+import SocialIcons from 'components/SocialIcons'
+import { HeaderStyled, InnerStyled } from './header.styled.js'
 import pageLogo from './logo-header.png'
 
 const defaultProps = {
@@ -28,14 +28,13 @@ const Header = ({
   const { facebook, twitter, instagram } = icons
 
   const headerStyles = {
-    ...styles.header,
     backgroundColor: bgColor,
     color: textColor,
   }
 
   return (
-    <header style={headerStyles}>
-      <div style={styles.headerInner}>
+    <HeaderStyled style={headerStyles}>
+      <InnerStyled>
         {pageLogo && <img src={pageLogo} alt={pageTitle} />}
         {hasIcons && (
           <SocialIcons
@@ -43,8 +42,8 @@ const Header = ({
             socialLinks={{ facebook, twitter, instagram }}
           />
         )}
-      </div>
-    </header>
+      </InnerStyled>
+    </HeaderStyled>
   )
 }
 
