@@ -1,5 +1,5 @@
 import React from 'react'
-import { card } from './styles'
+import { Card } from './card.styled'
 
 export default ({ children, style }) =>
-  <div style={{ ...style, ...card }}>{children}</div>
+  <Card className="card" style={{ ...style }}>{children}</Card>
