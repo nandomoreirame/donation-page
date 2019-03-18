@@ -5,5 +5,4 @@ export const Card = styled.div`
   z-index: 10;
   border-radius: 3px;
   background-color: #fff;
-  padding: 40px;
 `
