@@ -34,7 +34,7 @@ const Layout = ({ headerIcons, headerTitle, children, ...props }) => (
     </main>
     <Footer
       logo={logoFooter}
-      phones={[{ title: 'Para capitais', number: '0800 00 00 000' }, { title: 'Para outras localidades', number: '11 1234 56789'}]}
+      phones={[{ title: 'Para capitais', number: '0800 00 00 000' }, { title: 'Para outras localidades', number: '11 1234 56789' }]}
       email="contato@ong.org"
     />
   </div>

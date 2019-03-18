@@ -26,7 +26,7 @@ const SocialIcons = ({ textColor, size, fillColor, socialLinks }) => {
             rel="noopener noreferrer"
             key={i}
           >
-            <Icon id={`icon-${item}`} fill={fillColor} width={size} height={size} style={{ padding: '4px' }} />
+            <Icon id={`icon-${ item }`} fill={fillColor} width={size} height={size} style={{ padding: '4px' }} />
           </a>
         )
       })}

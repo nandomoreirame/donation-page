@@ -10,7 +10,7 @@ const defaultProps = {
 }
 
 const Hero = ({ title, description, backgroundColor, cover }) => (
-  <div style={{ ...hero, backgroundColor, backgroundImage: `url(${cover})` }}>
+  <div style={{ ...hero, backgroundColor, backgroundImage: `url(${ cover })` }}>
     <div style={heroInner}>
       {title && <h1 style={heroTitle}>{title}</h1>}
       {description && <p style={heroDescription}>{description}</p>}
