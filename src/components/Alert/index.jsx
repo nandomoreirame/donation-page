@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import Icon from '../Icons'
+
 import {
   Alert,
   AlertInner,
@@ -7,12 +9,13 @@ import {
   alertSuccess
 } from './alert.styled'
 
-export default ({ type, children, ...props }) => {
+export default ({ type = 'success', icon, children, ...props }) => {
   let styles = {}
   switch (type) {
   case 'info':
     styles = { ...alertInfo }
     break
+  case 'danger':
   case 'error':
     styles = { ...alertError }
     break
@@ -22,8 +25,13 @@ export default ({ type, children, ...props }) => {
     break
   }
   return (
-    <Alert className={`Alert Alert--${ type }`} style={styles} {...props}>
-      {children && <AlertInner className="Alert__inner">{children}</AlertInner>}
-    </Alert>
+    <Fragment>
+      {children &&
+        <Alert className={`alert alert--${ type }`} style={styles} {...props}>
+          {icon && <Icon id={`icon-${ icon }`} fill="currentColor" />}
+          <AlertInner className="Alert__inner">{children}</AlertInner>
+        </Alert>
+      }
+    </Fragment>
   )
 }

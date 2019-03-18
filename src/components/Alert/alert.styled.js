@@ -1,17 +1,26 @@
 import styled from 'styled-components'
 
 export const Alert = styled.div`
-  padding: 20px;
-  font-weight: 300;
+  padding: 20px 15px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  border: 1px solid transparent;
+  svg {
+    margin: 0;
+    padding: 5px;
+    margin-right: 5px;
+  }
 `
 
 export const AlertInner = styled.div`
   display: flex;
-  align-itens: center;
+  align-items: center;
   font-size: 16px;
   font-weight: 300;
-  border: 1px solid transparent;
-  border-radius: 3px;
+  p {
+    margin: 0;
+  }
 `
 
 export const alertSuccess = {

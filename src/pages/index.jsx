@@ -25,7 +25,7 @@ export default ({ data }) => {
       <Hero cover={cover} description={description} title={title} />
       <Container>
         <Card style={{ marginTop: '-200px' }}>
-          <Alert type="error">Corrija os campos abaixo</Alert>
+          <Alert type="error" icon="information">Corrija os campos abaixo</Alert>
           <p>title: {title}</p>
           <p>name: {name}</p>
           <p>description: {description}</p>
