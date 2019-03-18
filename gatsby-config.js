@@ -1,36 +1,18 @@
-const {
-  author,
-  description,
-  homepage,
-  name,
-  repository,
-  title,
-  version,
-} = require('./package.json')
 const rupture = require('rupture')
 const path = require('path')
-
-const isProduction = process.env.NODE_ENV === 'production'
-const siteUrl = isProduction ? homepage : 'http://localhost:8000'
+const { siteMetadata } = require('./data')
 
 module.exports = {
-  siteMetadata: {
-    author,
-    description,
-    isProduction,
-    name,
-    repository,
-    siteUrl,
-    social: {
-      facebook: 'oseunando',
-      twitter: 'oseunando',
-      instagram: 'oseunando',
-    },
-    title,
-    version,
-  },
+  siteMetadata,
   plugins: [
+    `gatsby-plugin-react-helmet`,
     `gatsby-plugin-styled-components`,
+    {
+      resolve: `gatsby-plugin-styled-components`,
+      options: {
+        displayName: false
+      },
+    },
     {
       resolve: `gatsby-plugin-stylus`,
       options: {
