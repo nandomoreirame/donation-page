@@ -1,5 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
+import { SEO } from '../components/SEO'
 import Layout from '../components/Layout'
 import Container from '../components/Container'
 import Hero from '../components/Hero'
@@ -20,10 +21,11 @@ export default ({ data }) => {
   } = data.site.siteMetadata
   return (
     <Layout headerIcons={social}>
+      <SEO />
       <Hero cover={cover} description={description} title={title} />
       <Container>
         <Card style={{ marginTop: '-200px' }}>
-          <Alert>Corrija os campos abaixo</Alert>
+          <Alert type="error">Corrija os campos abaixo</Alert>
           <p>title: {title}</p>
           <p>name: {name}</p>
           <p>description: {description}</p>

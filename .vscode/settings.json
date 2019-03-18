@@ -2,14 +2,11 @@
   "editor.formatOnSave": false,
   "search.exclude": {
     "public": true,
-    ".cache": true
+    ".cache": true,
+    "*.lock": true
   },
   "files.exclude": {
     "**/public": true,
     "**/.cache": true
-  },
-  "prettier.disableLanguages": [".test.js"],
-  "prettier.singleQuote": true,
-  "prettier.jsxSingleQuote": true,
-  "prettier.ignorePath": "**/__tests__/*"
+  }
 }
