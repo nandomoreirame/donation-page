@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { withFormik } from 'formik'
+import http from 'service/http'
 import Alert from 'components/Alert'
 import Card from 'components/Card'
 import Icon from 'components/Icons'
@@ -23,41 +24,22 @@ import {
 } from '../form.styled'
 
 const fieldsValues = {
-  paymentFrequency: 'mensais',
-  paymentValue: '',
-  paymentFirstName: '',
-  paymentLastName: '',
-  paymentEmail: '',
-  paymentCpf: '',
-  paymentCardNumber: '',
-  paymentCardCvv: '',
-  paymentCardValidate: '',
-  news: true,
+  recurrence: 'mensais',
+  value: '',
+  first_name: '',
+  last_name: '',
+  email: '',
+  document: '',
+  card_number: '',
+  cvv: '',
+  validity: '',
+  accept_contact: true,
 }
 
 // const sleep = ms =>
 //   new Promise(resolve => setTimeout(resolve, ms))
 
-const matcher = /.+\@.+\..+/ // eslint-disable-line
-const isEmail = string =>
-  matcher.test(string)
-
 class Form extends Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      isLoading: false,
-      fieldsValues,
-    }
-  }
-
-  // handleChange (event) {
-  //   const { target } = event
-  //   const value = target.type === 'checkbox' ? target.checked : target.value
-  //   this.setState({ [target.name]: value })
-  // }
-
   render () {
     const {
       handleSubmit,
@@ -78,25 +60,25 @@ class Form extends Component {
       >
         <Card>
           <Spacing>
-            {(Object.keys(errors).length > 0) &&
+            {/* {(Object.keys(errors).length > 0) &&
               <Alert
                 type="error"
                 icon="error"
               >Corrija os campos abaixo</Alert>
-            }
+            } */}
 
             <Legend>Selecione um valor</Legend>
             <Row>
               <Col mobile="12" tablet="3" desktop="3">
                 <Select
-                  name="paymentFrequency"
-                  id="paymentFrequency"
-                  value={values.paymentFrequency}
+                  name="recurrence"
+                  id="recurrence"
+                  value={values.recurrence}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={errors.paymentFrequency && touched.paymentFrequency}
+                  error={errors.recurrence && touched.recurrence}
                   className={
-                    errors.paymentFrequency && touched.paymentFrequency ? 'has--error' : ''
+                    errors.recurrence && touched.recurrence ? 'has--error' : ''
                   }
                 >
                   <option value="uma única vez">Única</option>
@@ -110,14 +92,14 @@ class Form extends Component {
                   <Input
                     placeholder="R$ 30,00"
                     type="number"
-                    name="paymentValue"
-                    id="paymentValue"
-                    value={values.paymentValue}
+                    name="value"
+                    id="value"
+                    value={values.value}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={errors.paymentValue && touched.paymentValue}
+                    error={errors.value && touched.value}
                     className={
-                      errors.paymentValue && touched.paymentValue ? 'has--error' : ''
+                      errors.value && touched.value ? 'has--error' : ''
                     }
                   />
                   <small>Valor mínimo de R$ 15,00</small>
@@ -135,10 +117,10 @@ class Form extends Component {
               <Col mobile="12" tablet="3" desktop="3">
                 <Label
                   error={
-                    (errors.paymentFirstName && touched.paymentFirstName) &&
-                    (errors.paymentLastName && touched.paymentLastName)
+                    (errors.first_name && touched.first_name) &&
+                    (errors.last_name && touched.last_name)
                   }
-                  htmlFor="paymentFirstName"
+                  htmlFor="first_name"
                 >
                     Nome completo <sup>*</sup>
                 </Label>
@@ -148,28 +130,28 @@ class Form extends Component {
                   <Col mobile="12" desktop="6">
                     <Input
                       placeholder="Primeiro nome"
-                      name="paymentFirstName"
-                      id="paymentFirstName"
-                      value={values.paymentFirstName}
+                      name="first_name"
+                      id="first_name"
+                      value={values.first_name}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={errors.paymentFirstName && touched.paymentFirstName}
+                      error={errors.first_name && touched.first_name}
                       className={
-                        errors.paymentFirstName && touched.paymentFirstName ? 'has--error' : ''
+                        errors.first_name && touched.first_name ? 'has--error' : ''
                       }
                     />
                   </Col>
                   <Col mobile="12" desktop="6">
                     <Input
                       placeholder="Sobrenome"
-                      name="paymentLastName"
-                      id="paymentLastName"
-                      value={values.paymentLastName}
+                      name="last_name"
+                      id="last_name"
+                      value={values.last_name}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={errors.paymentLastName && touched.paymentLastName}
+                      error={errors.last_name && touched.last_name}
                       className={
-                        errors.paymentLastName && touched.paymentLastName ? 'has--error' : ''
+                        errors.last_name && touched.last_name ? 'has--error' : ''
                       }
                     />
                   </Col>
@@ -180,8 +162,8 @@ class Form extends Component {
             <Row>
               <Col mobile="12" tablet="3" desktop="3">
                 <Label
-                  error={errors.paymentEmail && touched.paymentEmail}
-                  htmlFor="paymentEmail"
+                  error={errors.email && touched.email}
+                  htmlFor="email"
                 >
                     Email <sup>*</sup>
                 </Label>
@@ -190,14 +172,14 @@ class Form extends Component {
                 <Input
                   placeholder="email@email.com"
                   type="email"
-                  name="paymentEmail"
-                  id="paymentEmail"
-                  value={values.paymentEmail}
+                  name="email"
+                  id="email"
+                  value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={errors.paymentEmail && touched.paymentEmail}
+                  error={errors.email && touched.email}
                   className={
-                    errors.paymentEmail && touched.paymentEmail ? 'has--error' : ''
+                    errors.email && touched.email ? 'has--error' : ''
                   }
                 />
               </Col>
@@ -208,8 +190,8 @@ class Form extends Component {
             <Row>
               <Col mobile="12" desktop="3">
                 <Label
-                  htmlFor="paymentCpf"
-                  error={errors.paymentCpf && touched.paymentCpf}
+                  htmlFor="document"
+                  error={errors.document && touched.document}
                 >
                     CPF <sup>*</sup>
                 </Label>
@@ -219,14 +201,14 @@ class Form extends Component {
                   placeholder="000.000.000-00"
                   mask="999.999.999-99"
                   size="14"
-                  name="paymentCpf"
-                  id="paymentCpf"
-                  value={values.paymentCpf}
+                  name="document"
+                  id="document"
+                  value={values.document}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={errors.paymentCpf && touched.paymentCpf}
+                  error={errors.document && touched.document}
                   className={
-                    errors.paymentCpf && touched.paymentCpf ? 'has--error' : ''
+                    errors.document && touched.document ? 'has--error' : ''
                   }
                 />
               </Col>
@@ -235,8 +217,8 @@ class Form extends Component {
             <Row>
               <Col mobile="12" desktop="3">
                 <Label
-                  error={errors.paymentCardNumber && touched.paymentCardNumber}
-                  htmlFor="paymentCardNumber"
+                  error={errors.card_number && touched.card_number}
+                  htmlFor="card_number"
                 >
                     Número do cartão <sup>*</sup>
                 </Label>
@@ -248,14 +230,14 @@ class Form extends Component {
                       placeholder="0000 0000 0000 0000"
                       mask="9999 9999 9999 9999"
                       size="20"
-                      name="paymentCardNumber"
-                      id="paymentCardNumber"
-                      value={values.paymentCardNumber}
+                      name="card_number"
+                      id="card_number"
+                      value={values.card_number}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={errors.paymentCardNumber && touched.paymentCardNumber}
+                      error={errors.card_number && touched.card_number}
                       className={
-                        errors.paymentCardNumber && touched.paymentCardNumber ? 'has--error' : ''
+                        errors.card_number && touched.card_number ? 'has--error' : ''
                       }
                     />
                   </Col>
@@ -264,14 +246,14 @@ class Form extends Component {
                       placeholder="CVV"
                       mask="999"
                       size="3"
-                      name="paymentCardCvv"
-                      id="paymentCardCvv"
-                      value={values.paymentCardCvv}
+                      name="cvv"
+                      id="cvv"
+                      value={values.cvv}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={errors.paymentCardCvv && touched.paymentCardCvv}
+                      error={errors.cvv && touched.cvv}
                       className={
-                        errors.paymentCardCvv && touched.paymentCardCvv ? 'has--error' : ''
+                        errors.cvv && touched.cvv ? 'has--error' : ''
                       }
                     />
                   </Col>
@@ -282,8 +264,8 @@ class Form extends Component {
             <Row>
               <Col mobile="12" desktop="3">
                 <Label
-                  error={errors.paymentCardValidate && touched.paymentCardValidate}
-                  htmlFor="paymentCardValidate"
+                  error={errors.validity && touched.validity}
+                  htmlFor="validity"
                 >
                     Validade do cartão <sup>*</sup>
                 </Label>
@@ -293,15 +275,15 @@ class Form extends Component {
                   placeholder="00/00"
                   mask="99/99"
                   size="5"
-                  name="paymentCardValidate"
-                  id="paymentCardValidate"
-                  value={values.paymentCardValidate}
+                  name="validity"
+                  id="validity"
+                  value={values.validity}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   icon="calendar"
-                  error={errors.paymentCardValidate && touched.paymentCardValidate}
+                  error={errors.validity && touched.validity}
                   className={
-                    errors.paymentCardValidate && touched.paymentCardValidate ? 'has--error' : ''
+                    errors.validity && touched.validity ? 'has--error' : ''
                   }
                 />
               </Col>
@@ -312,7 +294,11 @@ class Form extends Component {
             <Spacing>
               <Row>
                 <Col mobile="12" desktop="3">
-                  <h4 style={{ margin: 0, fontSize: '18px' }}>R$ {this.state.paymentValue || `00`} {this.state.paymentFrequency}</h4>
+                  {values.value &&
+                    <h4 style={{ margin: 0, fontSize: '18px' }}>
+                      R$ {values.value || `00`} {values.recurrence}
+                    </h4>
+                  }
                 </Col>
                 <Col mobile="12" desktop="9">
                   <Button
@@ -322,9 +308,9 @@ class Form extends Component {
                   <Row>
                     <Col mobile="12" desktop="12">
                       <Checkbox
-                        name="news"
-                        id="news"
-                        checked={values.news}
+                        name="accept_contact"
+                        id="accept_contact"
+                        checked={values.accept_contact}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         label="Aceito ser contatado para receber informações sobre a ONG"
@@ -340,6 +326,10 @@ class Form extends Component {
     )
   }
 }
+
+const matcher = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i // eslint-disable-line
+const isEmail = string =>
+  matcher.test(string)
 
 export default withFormik({
   mapPropsToValues (props) {
@@ -357,16 +347,19 @@ export default withFormik({
         errors[_field] = `Campo ${ field[0] } é obrigatório!`
       })
 
-    if (!isEmail(values.paymentEmail)) {
-      errors.paymentEmail = `Email inválido!`
+    if (!isEmail(values.email)) {
+      errors.email = `Email inválido!`
     }
 
     return errors
   },
 
-  handleSubmit (values, formikBag) {
-    console.log(values)
-
-    formikBag.setSubmitting(false)
+  async handleSubmit (values, { setSubmitting }) {
+    setSubmitting(true)
+    await http
+      .post('/donors.json', values)
+      .then(() => {
+        setSubmitting(false)
+      })
   }
 })(Form)

@@ -1,4 +1,5 @@
-const API_URL = ''
+const API_URL = 'https://frontend-test-trackmob.firebaseio.com'
+const GITHUB_USER = 'nandomoreirame'
 
 const encode = data =>
   Object.keys(data)
@@ -6,7 +7,7 @@ const encode = data =>
     .join('&')
 
 const http = (path, method = 'GET', body = '', headers = {}) =>
-  fetch(`${ API_URL }${ path }`, {
+  fetch(`${ API_URL }/${ GITHUB_USER }${ path }`, {
     method,
     body,
     headers: {

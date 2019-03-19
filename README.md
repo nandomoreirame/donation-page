@@ -17,16 +17,16 @@ Você deverá implementar a página disponível ​[nesse link​](https://d
 Crie um repositório no github para o teste e nos envie o link assim que terminar.
 Você deve executar os seguintes pontos:
 
-- [ ] Finalizar a página seguindo as guias e o exemplo no arquivo PSD
+- [x] Finalizar a página seguindo as guias e o exemplo no arquivo PSD
       (use o GIMP caso não possua o Photoshop)
-- [ ] Implementar a validação de e-mail, exibindo o erro como no exemplo.
-- [ ] O selectbox de frequência deve ter as seguintes opções: "Única", "Mensal",
+- [x] Implementar a validação de e-mail, exibindo o erro como no exemplo.
+- [x] O selectbox de frequência deve ter as seguintes opções: "Única", "Mensal",
       "Semestral", "Anual"
-- [ ] O valor inserido e a frequência devem mudar o valor ao lado do botão de
-      confirmação (R\$ 35 mensais no exemplo)
-- [ ] Todos os campos são necessários, mostre com um erro os campos
+- [x] O valor inserido e a frequência devem mudar o valor ao lado do botão de
+      confirmação (R$ 35 mensais no exemplo)
+- [x] Todos os campos são necessários, mostre com um erro os campos
       esquecidos ao submeter o formulário
-- [ ] Se todo os campos estiverem preenchidos e validados, você deve enviar os
+- [x] Se todo os campos estiverem preenchidos e validados, você deve enviar os
       dados para a API REST
 
 ### API REST
