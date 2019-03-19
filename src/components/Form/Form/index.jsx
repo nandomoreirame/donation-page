@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import { withFormik } from 'formik'
+import Alert from 'components/Alert'
 import Card from 'components/Card'
 import Icon from 'components/Icons'
-import Alert from 'components/Alert'
 import Badge from 'components/Badge'
 import Spacing from 'components/Spacing'
 import Well from 'components/Well'
@@ -21,71 +22,87 @@ import {
   FooterStyled
 } from '../form.styled'
 
-export class Form extends Component {
+const fieldsValues = {
+  paymentFrequency: 'mensais',
+  paymentValue: '',
+  paymentFirstName: '',
+  paymentLastName: '',
+  paymentEmail: '',
+  paymentCpf: '',
+  paymentCardNumber: '',
+  paymentCardCvv: '',
+  paymentCardValidate: '',
+  news: true,
+}
+
+// const sleep = ms =>
+//   new Promise(resolve => setTimeout(resolve, ms))
+
+const matcher = /.+\@.+\..+/ // eslint-disable-line
+const isEmail = string =>
+  matcher.test(string)
+
+class Form extends Component {
   constructor (props) {
     super(props)
+
     this.state = {
       isLoading: false,
-      paymentFrequency: '',
-      paymentValue: '',
-      paymentFirstName: '',
-      paymentLastName: '',
-      paymentEmail: '',
-      paymentCpf: '',
-      paymentCardNumber: '',
-      paymentCardCvv: '',
-      paymentCardValidate: '',
-      news: true,
+      fieldsValues,
     }
-
-    this.onChangeHandler = this.onChangeHandler.bind(this)
-    this.formSubmitHandler = this.formSubmitHandler.bind(this)
   }
 
-  onChangeHandler (event) {
-    const { target } = event
-    const value = target.type === 'checkbox' ? target.checked : target.value
-    this.setState({ [target.name]: value })
-  }
-
-  formSubmitHandler (event) {
-    this.setState({
-      isLoading: true
-    })
-
-    // fetch(`/contato`, {
-    //   method: `POST`,
-    //   headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    //   body: this.encode({ 'form-name': 'contact', ...this.state.formData })
-    // })
-    //   .then(res => this.handleSuccess(res))
-    //   .catch(error => {
-    //     this.setState({
-    //       wasSent: false,
-    //       error
-    //     })
-    //   })
-
-    event.preventDefault()
-  }
+  // handleChange (event) {
+  //   const { target } = event
+  //   const value = target.type === 'checkbox' ? target.checked : target.value
+  //   this.setState({ [target.name]: value })
+  // }
 
   render () {
+    const {
+      handleSubmit,
+      isSubmitting,
+      handleChange,
+      handleBlur,
+      isValid,
+      values,
+      errors,
+      touched,
+    } = this.props
+
     return (
-      <FormStyled action="/" method="post">
+      <FormStyled
+        action="/"
+        method="post"
+        onSubmit={handleSubmit}
+      >
         <Card>
           <Spacing>
+            {(Object.keys(errors).length > 0) &&
+              <Alert
+                type="error"
+                icon="error"
+              >Corrija os campos abaixo</Alert>
+            }
+
             <Legend>Selecione um valor</Legend>
             <Row>
               <Col mobile="12" tablet="3" desktop="3">
                 <Select
                   name="paymentFrequency"
                   id="paymentFrequency"
-                  value={this.state.paymentFrequency}
-                  onChange={this.onChangeHandler}
+                  value={values.paymentFrequency}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.paymentFrequency && touched.paymentFrequency}
+                  className={
+                    errors.paymentFrequency && touched.paymentFrequency ? 'has--error' : ''
+                  }
                 >
-                  <option value="Mensal">Mensal</option>
-                  <option value="Semestral">Semestral</option>
-                  <option value="Anual">Anual</option>
+                  <option value="uma única vez">Única</option>
+                  <option value="mensais">Mensal</option>
+                  <option value="semestrais">Semestral</option>
+                  <option value="anuais">Anual</option>
                 </Select>
               </Col>
               <Col mobile="12" tablet="9" desktop="9">
@@ -95,9 +112,15 @@ export class Form extends Component {
                     type="number"
                     name="paymentValue"
                     id="paymentValue"
-                    value={this.state.paymentValue}
-                    onChange={this.onChangeHandler}
+                    value={values.paymentValue}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={errors.paymentValue && touched.paymentValue}
+                    className={
+                      errors.paymentValue && touched.paymentValue ? 'has--error' : ''
+                    }
                   />
+                  <small>Valor mínimo de R$ 15,00</small>
                 </Well>
               </Col>
             </Row>
@@ -106,19 +129,18 @@ export class Form extends Component {
           <hr />
 
           <Spacing>
-
-            <Row>
-              <Col>
-                <Alert type="error" icon="information">Corrija os campos abaixo</Alert>
-              </Col>
-            </Row>
-
             <Legend>Dados pessoais</Legend>
 
             <Row>
               <Col mobile="12" tablet="3" desktop="3">
-                <Label htmlFor="paymentFirstName">
-                  Nome completo <sup>*</sup>
+                <Label
+                  error={
+                    (errors.paymentFirstName && touched.paymentFirstName) &&
+                    (errors.paymentLastName && touched.paymentLastName)
+                  }
+                  htmlFor="paymentFirstName"
+                >
+                    Nome completo <sup>*</sup>
                 </Label>
               </Col>
               <Col mobile="12" tablet="9" desktop="9">
@@ -128,8 +150,13 @@ export class Form extends Component {
                       placeholder="Primeiro nome"
                       name="paymentFirstName"
                       id="paymentFirstName"
-                      value={this.state.paymentFirstName}
-                      onChange={this.onChangeHandler}
+                      value={values.paymentFirstName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.paymentFirstName && touched.paymentFirstName}
+                      className={
+                        errors.paymentFirstName && touched.paymentFirstName ? 'has--error' : ''
+                      }
                     />
                   </Col>
                   <Col mobile="12" desktop="6">
@@ -137,8 +164,13 @@ export class Form extends Component {
                       placeholder="Sobrenome"
                       name="paymentLastName"
                       id="paymentLastName"
-                      value={this.state.paymentLastName}
-                      onChange={this.onChangeHandler}
+                      value={values.paymentLastName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.paymentLastName && touched.paymentLastName}
+                      className={
+                        errors.paymentLastName && touched.paymentLastName ? 'has--error' : ''
+                      }
                     />
                   </Col>
                 </Row>
@@ -147,8 +179,11 @@ export class Form extends Component {
 
             <Row>
               <Col mobile="12" tablet="3" desktop="3">
-                <Label htmlFor="paymentEmail">
-                  Email <sup>*</sup>
+                <Label
+                  error={errors.paymentEmail && touched.paymentEmail}
+                  htmlFor="paymentEmail"
+                >
+                    Email <sup>*</sup>
                 </Label>
               </Col>
               <Col mobile="12" tablet="9" desktop="9">
@@ -157,8 +192,13 @@ export class Form extends Component {
                   type="email"
                   name="paymentEmail"
                   id="paymentEmail"
-                  value={this.state.paymentEmail}
-                  onChange={this.onChangeHandler}
+                  value={values.paymentEmail}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.paymentEmail && touched.paymentEmail}
+                  className={
+                    errors.paymentEmail && touched.paymentEmail ? 'has--error' : ''
+                  }
                 />
               </Col>
             </Row>
@@ -167,8 +207,11 @@ export class Form extends Component {
 
             <Row>
               <Col mobile="12" desktop="3">
-                <Label htmlFor="paymentCpf">
-                  CPF <sup>*</sup>
+                <Label
+                  htmlFor="paymentCpf"
+                  error={errors.paymentCpf && touched.paymentCpf}
+                >
+                    CPF <sup>*</sup>
                 </Label>
               </Col>
               <Col mobile="12" desktop="3">
@@ -178,15 +221,24 @@ export class Form extends Component {
                   size="14"
                   name="paymentCpf"
                   id="paymentCpf"
-                  value={this.state.paymentCpf}
-                  onChange={this.onChangeHandler} />
+                  value={values.paymentCpf}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.paymentCpf && touched.paymentCpf}
+                  className={
+                    errors.paymentCpf && touched.paymentCpf ? 'has--error' : ''
+                  }
+                />
               </Col>
             </Row>
 
             <Row>
               <Col mobile="12" desktop="3">
-                <Label htmlFor="paymentCardNumber">
-                  Número do cartão <sup>*</sup>
+                <Label
+                  error={errors.paymentCardNumber && touched.paymentCardNumber}
+                  htmlFor="paymentCardNumber"
+                >
+                    Número do cartão <sup>*</sup>
                 </Label>
               </Col>
               <Col mobile="12" desktop="9">
@@ -198,8 +250,13 @@ export class Form extends Component {
                       size="20"
                       name="paymentCardNumber"
                       id="paymentCardNumber"
-                      value={this.state.paymentCardNumber}
-                      onChange={this.onChangeHandler}
+                      value={values.paymentCardNumber}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.paymentCardNumber && touched.paymentCardNumber}
+                      className={
+                        errors.paymentCardNumber && touched.paymentCardNumber ? 'has--error' : ''
+                      }
                     />
                   </Col>
                   <Col mobile="12" desktop="2">
@@ -209,8 +266,13 @@ export class Form extends Component {
                       size="3"
                       name="paymentCardCvv"
                       id="paymentCardCvv"
-                      value={this.state.paymentCardCvv}
-                      onChange={this.onChangeHandler}
+                      value={values.paymentCardCvv}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.paymentCardCvv && touched.paymentCardCvv}
+                      className={
+                        errors.paymentCardCvv && touched.paymentCardCvv ? 'has--error' : ''
+                      }
                     />
                   </Col>
                 </Row>
@@ -219,8 +281,11 @@ export class Form extends Component {
 
             <Row>
               <Col mobile="12" desktop="3">
-                <Label htmlFor="paymentCardValidate">
-                  Validade do cartão <sup>*</sup>
+                <Label
+                  error={errors.paymentCardValidate && touched.paymentCardValidate}
+                  htmlFor="paymentCardValidate"
+                >
+                    Validade do cartão <sup>*</sup>
                 </Label>
               </Col>
               <Col mobile="12" desktop="2">
@@ -230,8 +295,14 @@ export class Form extends Component {
                   size="5"
                   name="paymentCardValidate"
                   id="paymentCardValidate"
-                  value={this.state.paymentCardValidate}
+                  value={values.paymentCardValidate}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                   icon="calendar"
+                  error={errors.paymentCardValidate && touched.paymentCardValidate}
+                  className={
+                    errors.paymentCardValidate && touched.paymentCardValidate ? 'has--error' : ''
+                  }
                 />
               </Col>
             </Row>
@@ -241,17 +312,21 @@ export class Form extends Component {
             <Spacing>
               <Row>
                 <Col mobile="12" desktop="3">
-                  <h4>R$ 35 mensais</h4>
+                  <h4 style={{ margin: 0, fontSize: '18px' }}>R$ {this.state.paymentValue || `00`} {this.state.paymentFrequency}</h4>
                 </Col>
                 <Col mobile="12" desktop="9">
-                  <Button type="submit">Confirmar doação</Button>
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting || !isValid}
+                  >Confirmar doação</Button>
                   <Row>
                     <Col mobile="12" desktop="12">
                       <Checkbox
                         name="news"
                         id="news"
-                        checked={this.state.news}
-                        onChange={this.onChangeHandler}
+                        checked={values.news}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
                         label="Aceito ser contatado para receber informações sobre a ONG"
                       />
                     </Col>
@@ -265,3 +340,33 @@ export class Form extends Component {
     )
   }
 }
+
+export default withFormik({
+  mapPropsToValues (props) {
+    return fieldsValues
+  },
+
+  validate (values) {
+    const errors = {}
+    const items = Object.entries(values)
+
+    items
+      .filter(field => field[1] === '')
+      .map(field => {
+        const _field = field[0]
+        errors[_field] = `Campo ${ field[0] } é obrigatório!`
+      })
+
+    if (!isEmail(values.paymentEmail)) {
+      errors.paymentEmail = `Email inválido!`
+    }
+
+    return errors
+  },
+
+  handleSubmit (values, formikBag) {
+    console.log(values)
+
+    formikBag.setSubmitting(false)
+  }
+})(Form)

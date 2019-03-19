@@ -7,7 +7,6 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
         join(__dirname, '.'),
         join(__dirname, 'src'),
         join(__dirname, 'data'),
-        join(__dirname, 'layouts'),
         'node_modules'
       ],
     },

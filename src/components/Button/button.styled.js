@@ -35,4 +35,12 @@ export const ButtonStyled = styled.button`
   appearance: none;
   transition: background-color .12s ease-in-out, color .12s ease-in-out, border-color .12s ease-in-out;
   ${ ({ type }) => type && buttonVariant(type) }
+  &:disabled,
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.65;
+    color: #666666;
+    border-color: #c0c0c0;
+    background-color: #ccc;
+  }
 `

@@ -5,7 +5,7 @@ import { SEO } from 'components/SEO'
 import { Container } from 'components/Grid'
 import Hero from 'components/Hero'
 import cover from 'components/Hero/hero-bg.png'
-import { Form } from 'components/Form'
+import Form from 'components/Form'
 
 export default ({ data }) => {
   const {

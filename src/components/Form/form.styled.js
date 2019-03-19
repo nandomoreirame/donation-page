@@ -49,6 +49,11 @@ export const LabelStyled = styled.label`
   }
 `
 
+const inputError = `
+  border: solid 1px #ff5252;
+  background-color: #fafafa;
+`
+
 const inputStyles = `
   display: block;
   width: 100%;
@@ -64,6 +69,7 @@ const inputStyles = `
 
 export const InputStyled = styled.input`
   ${ inputStyles }
+  ${ ({ error }) => error && inputError }
   &::placeholder {
     opacity: 0.54;
     font-style: italic;
@@ -73,6 +79,10 @@ export const InputStyled = styled.input`
 
 export const SelectStyled = styled.select`
   ${ inputStyles }
+  ${ ({ error }) => error && inputError }
+  &.has-error {
+    ${ inputError }
+  }
 `
 
 export const FormGroupStyled = styled.div`
