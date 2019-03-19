@@ -3,6 +3,24 @@ import { storiesOf } from '@storybook/react'
 import Icon from '../index'
 
 storiesOf('Icons', module)
+  .add('All', () => (
+    <>
+      <Icon id="icon-close-outline" />
+      <Icon id="icon-close" />
+      <Icon id="icon-calendar" />
+      <Icon id="icon-check" />
+      <Icon id="icon-error" />
+      <Icon id="icon-facebook" />
+      <Icon id="icon-information" />
+      <Icon id="icon-instagram" />
+      <Icon id="icon-linkedin" />
+      <Icon id="icon-lock" />
+      <Icon id="icon-pinterest" />
+      <Icon id="icon-triangle-down" />
+      <Icon id="icon-twitter" />
+      <Icon id="icon-youtube" />
+    </>
+  ))
   .add('close-outline', () => <Icon id="icon-close-outline" />)
   .add('close', () => <Icon id="icon-close" />)
   .add('calendar', () => <Icon id="icon-calendar" />)

@@ -5,8 +5,15 @@ const buttonVariant = type => {
   case 'secondary':
     return `
       color: #fff;
-      border-color: #ff9800;
-      background-color: #ff9800;
+      border-color: #2196f3;
+      background-color: #2196f3;
+      svg {
+        fill: #fff;
+      }
+      &:hover {
+        border-color: #0059a0;
+        background-color: #0059a0;
+      }
     `
   case 'primary':
   default:
@@ -14,6 +21,9 @@ const buttonVariant = type => {
       color: #fff;
       border-color: #ff9800;
       background-color: #ff9800;
+      svg {
+        fill: #fff;
+      }
       &:hover {
         border-color: #da8201;
         background-color: #da8201;
@@ -35,6 +45,13 @@ export const ButtonStyled = styled.button`
   appearance: none;
   transition: background-color .12s ease-in-out, color .12s ease-in-out, border-color .12s ease-in-out;
   ${ ({ type }) => type && buttonVariant(type) }
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5px 0 0;
+    width: 16px;
+    height: 16px;
+  }
   &:disabled,
   &[disabled] {
     cursor: not-allowed;

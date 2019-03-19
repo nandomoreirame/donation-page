@@ -26,6 +26,7 @@ const getColSize = value => {
 }
 
 export const ColStyled = styled.div`
+  box-sizing: border-box;
   padding-right: 10px;
   padding-left: 10px;
   flex-basis: 0;
